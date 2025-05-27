@@ -10,6 +10,11 @@
 #sudo su - ec2-user
 
 #!/bin/bash
+# This script installs Tomcat on Amazon linux-2 and Redhat
+# Use script as root user
+# Make sure EC2 suit prerequisite for software to run
+# Author Prof Atanga
+
 sudo hostnamectl set-hostname tomcat9
 cd /opt
 sudo yum install git unzip wget -y
