@@ -1,6 +1,6 @@
 # AWS Acccount.
 # Create Security Group and open Required ports. 8080 
-# Create Redhat EC2 T2.medium Instance with 4GB of RAM.
+# Create Amazon linux-2 / Redhat EC2 T2.medium Instance with 4GB of RAM.
 # Attach Security Group to EC2 Instance.
 # Install java openJDK 11+
 
