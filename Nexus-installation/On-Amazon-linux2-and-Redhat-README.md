@@ -9,60 +9,60 @@
 ### Install java openJDK 1.8+ for Nexus version 3.15
 
 
-   #!/bin/bash
-   sudo hostnamectl set-hostname nexus
-   sudo useradd nexus
-   sudo echo "nexus ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/nexu
-   cd /opt
-   sudo yum install wget git nano unzip -y
-   sudo yum install java-11-openjdk-devel java-1.8.0-openjdk-devel -y
-   sudo wget http://download.sonatype.com/nexus/3/nexus-3.15.2-01-unix.tar.gz 
-   sudo tar -zxvf nexus-3.15.2-01-unix.tar.gz
-   sudo mv /opt/nexus-3.15.2-01 /opt/nexus
-   sudo rm -rf nexus-3.15.2-01-unix.tar.gz
-   sudo chown -R nexus:nexus /opt/nexus
-   sudo chown -R nexus:nexus /opt/sonatype-work
-   sudo chmod -R 775 /opt/nexus
-   sudo chmod -R 775 /opt/sonatype-work
-   /bin/bash
+      #!/bin/bash
+      sudo hostnamectl set-hostname nexus
+      sudo useradd nexus
+      sudo echo "nexus ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/nexu
+      cd /opt
+      sudo yum install wget git nano unzip -y
+      sudo yum install java-11-openjdk-devel java-1.8.0-openjdk-devel -y
+      sudo wget http://download.sonatype.com/nexus/3/nexus-3.15.2-01-unix.tar.gz 
+      sudo tar -zxvf nexus-3.15.2-01-unix.tar.gz
+      sudo mv /opt/nexus-3.15.2-01 /opt/nexus
+      sudo rm -rf nexus-3.15.2-01-unix.tar.gz
+      sudo chown -R nexus:nexus /opt/nexus
+      sudo chown -R nexus:nexus /opt/sonatype-work
+      sudo chmod -R 775 /opt/nexus
+      sudo chmod -R 775 /opt/sonatype-work
+      /bin/bash
 
 ### run the below command to add nexus as a user in nexus
 
-   echo  'run_as_user="nexus" ' > /opt/nexus/bin/nexus.rc
+      echo  'run_as_user="nexus" ' > /opt/nexus/bin/nexus.rc
 
 ### create soft link for nexus
 
-   sudo ln -s /opt/nexus/bin/nexus /etc/init.d/nexus
+     sudo ln -s /opt/nexus/bin/nexus /etc/init.d/nexus
 
 ## Start nexus
 
-   sudo systemctl enable nexus
-   sudo systemctl start nexus
-   sudo systemctl status nexus
+      sudo systemctl enable nexus
+      sudo systemctl start nexus
+      sudo systemctl status nexus
 
 
 ## The below script will automate the process
 
-   #!/bin/bash
-   sudo hostnamectl set-hostname nexus
-   sudo useradd nexus
-   sudo echo "nexus ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/nexus
-   cd /opt
-   sudo yum install wget git nano unzip -y
-   sudo yum install java-11-openjdk-devel java-1.8.0-openjdk-devel -y
-   sudo wget http://download.sonatype.com/nexus/3/nexus-3.15.2-01-unix.tar.gz 
-   sudo tar -zxvf nexus-3.15.2-01-unix.tar.gz
-   sudo mv /opt/nexus-3.15.2-01 /opt/nexus
-   sudo rm -rf nexus-3.15.2-01-unix.tar.gz
-   sudo chown -R nexus:nexus /opt/nexus
-   sudo chown -R nexus:nexus /opt/sonatype-work
-   sudo chmod -R 775 /opt/nexus
-   sudo chmod -R 775 /opt/sonatype-work
-   sudo echo  'run_as_user="nexus" ' > /opt/nexus/bin/nexus.rc
-   sudo ln -s /opt/nexus/bin/nexus /etc/init.d/nexus
-   sudo su - nexus -c "/opt/nexus/bin/nexus enable"
-   sudo su - nexus -c "/opt/nexus/bin/nexus start"
-   sudo su - nexus -c "/opt/nexus/bin/nexus status"
+      #!/bin/bash
+      sudo hostnamectl set-hostname nexus
+      sudo useradd nexus
+      sudo echo "nexus ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/nexus
+      cd /opt
+      sudo yum install wget git nano unzip -y
+      sudo yum install java-11-openjdk-devel java-1.8.0-openjdk-devel -y
+      sudo wget http://download.sonatype.com/nexus/3/nexus-3.15.2-01-unix.tar.gz 
+      sudo tar -zxvf nexus-3.15.2-01-unix.tar.gz
+      sudo mv /opt/nexus-3.15.2-01 /opt/nexus
+      sudo rm -rf nexus-3.15.2-01-unix.tar.gz
+      sudo chown -R nexus:nexus /opt/nexus
+      sudo chown -R nexus:nexus /opt/sonatype-work
+      sudo chmod -R 775 /opt/nexus
+      sudo chmod -R 775 /opt/sonatype-work
+      sudo echo  'run_as_user="nexus" ' > /opt/nexus/bin/nexus.rc
+      sudo ln -s /opt/nexus/bin/nexus /etc/init.d/nexus
+      sudo su - nexus -c "/opt/nexus/bin/nexus enable"
+      sudo su - nexus -c "/opt/nexus/bin/nexus start"
+      sudo su - nexus -c "/opt/nexus/bin/nexus status"
 
 
 
