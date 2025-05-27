@@ -264,8 +264,7 @@ At this piont, you have deployed a stand-alone-apllication
 
 ### Install java openJDK 1.8+
 
-
-## RUN THIS FIRST TWO COMMANDS
+## Run the below script
 
     #!/bin/bash
     sudo hostnamectl set-hostname maven
