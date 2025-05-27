@@ -302,47 +302,50 @@ source ~/.bash_profile
 
 ## THIS SCRIPT WILL INSTALL AND CONFIGURE APACHE MAVEN
 
-  #!/bin/bash
-  cd /opt
-  sudo yum install wget nano tree unzip git-all -y
-  sudo yum install java-11-openjdk-devel java-1.8.0-openjdk-devel -y
-  sudo wget https://dlcdn.apache.org/maven/maven-3/3.9.4/binaries/apache-maven-3.9.4-bin.zip
-  sudo unzip apache-maven-3.9.4-bin.zip
-  sudo rm -rf apache-maven-3.9.4-bin.zip
-  sudo mv apache-maven-3.9.4/ maven
+    #!/bin/bash
+    cd /opt
+    sudo yum install wget nano tree unzip git-all -y
+    sudo yum install java-11-openjdk-devel java-1.8.0-openjdk-devel -y
+    sudo wget https://dlcdn.apache.org/maven/maven-3/3.9.4/binaries/apache-maven-3.9.4-bin.zip
+    sudo unzip apache-maven-3.9.4-bin.zip
+    sudo rm -rf apache-maven-3.9.4-bin.zip
+    sudo mv apache-maven-3.9.4/ maven
 
 ### make sure you cd out of the /opt directory 
 
 # Run
 
-  echo "export M2_HOME=/opt/maven" >> ~/.bash_profile
+    echo "export M2_HOME=/opt/maven" >> ~/.bash_profile
 
 # Then
 
-  echo "export PATH=$PATH:$M2_HOME/bin" >> ~/.bash_profile
+    echo "export PATH=$PATH:$M2_HOME/bin" >> ~/.bash_profile
 
 # Restart the .bash_profile by running the below command
 
-  source ~/.bash_profile
+    source ~/.bash_profile
 
-  sudo hostnamectl set-hostname maven
+    sudo hostnamectl set-hostname maven
 
-  sudo su - ec2-user
+    /bin/bash
 
+check if maven is installed
 
-check if maven if installed
+   if [ -x "$(command -v mvn)" ];
+   then
+    echo "maven is already installed."
+    exit 0
+   fi
 
-if [ -x "$(command -v mvn)" ];
-then
- echo "maven is already installed."
- exit 0
-fi
+## Or run 
+
+    mvn --version
 
 ## YOU CAN STILL AS WELL CONFIGURE MAVEN AS SUCH
 
-echo "export M2_HOME=/usr/share/maven" >> ~/.bashrc
-echo "export MAVEN_HOME=/usr/share/maven" >> ~/.bashrc
-echo "export PATH=${M2_HOME}/bin:$PATH}" >> ~/.bashrc
+   echo "export M2_HOME=/usr/share/maven" >> ~/.bashrc
+   echo "export MAVEN_HOME=/usr/share/maven" >> ~/.bashrc
+   echo "export PATH=${M2_HOME}/bin:$PATH}" >> ~/.bashrc
 
 
 
@@ -353,14 +356,14 @@ and it is a more simplier script to use as user data when
 when launching and configuring maven directly on the EC2
 console dashboard
 
-  #!/bin/bash
-  sudo yum update
-  sudo yum install maven -y
-  echo "export M2_HOME=/usr/share/maven" >> ~/.bashrc
-  echo "export MAVEN_HOME=/usr/share/maven" >> ~/.bashrc
-  echo "export PATH=${M2_HOME}/bin:$PATH}" >> ~/.bashrc
-  sudo hostnamectl set-hostname maven
-  sudo su - ec2-user
+    #!/bin/bash
+    sudo yum update
+    sudo yum install maven -y
+    echo "export M2_HOME=/usr/share/maven" >> ~/.bashrc
+    echo "export MAVEN_HOME=/usr/share/maven" >> ~/.bashrc
+    echo "export PATH=${M2_HOME}/bin:$PATH}" >> ~/.bashrc
+    sudo hostnamectl set-hostname maven
+    sudo su - ec2-user
 
 
 
