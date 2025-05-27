@@ -1,0 +1,132 @@
+SonarQube installation on Ubuntu
+================================
+
+# AWS Acccount.
+# Create Security Group and open Required ports. 9000 
+# Create Ubuntu / Debian EC2 T2.medium Instance with 4GB of RAM.
+# Attach Security Group to EC2 Instance.
+# Install java openJDK 11+
+
+## Installation of Postgresql database for SonarQube
+
+#!/bin/bash
+# Run script as root user
+
+sudo apt update
+sudo apt-get install openjdk-17-jdk -y
+sudo sh -c 'echo “deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main” /etc/apt/sources.list.d/pgdg.list'
+sudo apt install postgresql postgresql-contrib -y
+sudo systemctl enable postgresql
+sudo systemctl start postgresql
+# end of script for postgres installation
+
+
+## Postgresql configuration
+
+#Change the default PostgreSQL password
+
+sudo passwd postgres
+
+#Switch to the postgres user
+
+su - postgres
+
+#Create a user sonar
+
+createuser sonar
+
+#Log in to PostgreSQL
+
+psql
+
+#Set a password for the sonar user
+
+ALTER USER sonar WITH ENCRYPTED password 'yourPassword';
+
+#Create a sonarqube database and set the owner to sonar
+
+CREATE DATABASE sonarqube OWNER sonar;
+
+#Grant all the privileges on the sonarqube database to the sonar user
+
+GRANT ALL PRIVILEGES ON DATABASE sonarqube to sonar;
+
+#Exit PostgreSQL
+
+\q
+
+#Return to your non-root sudo user account
+
+exit
+
+
+## Script to install SonarQube
+
+#!/bin/bash
+#Run script as root user
+
+sudo apt update
+sudo apt-get install zip -y
+sudo wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-9.9.3.79811.zip
+sudo unzip sonarqube-9.9.3.79811.zip
+sudo mv sonarqube-9.9.3.79811 /opt/sonarqube
+sudo groupadd sonar
+sudo useradd -d /opt/sonarqube -g sonar sonar
+sudo chown sonar:sonar /opt/sonarqube -R
+
+# Configure sonar.properties with with database user and passwd
+
+sudo sed -i 's/^#\?sonar.jdbc.username=.*/sonar.jdbc.username=sonar/' /opt/sonarqube/conf/sonar.properties
+sudo sed -i 's/^#\?sonar.jdbc.password=.*/sonar.jdbc.password=admin123/' /opt/sonarqube/conf/sonar.properties
+sed -i '/^#\?sonar.jdbc.url=/c\sonar.jdbc.url=jdbc:postgresql://localhost:5432/sonarqube' /opt/sonarqube/conf/sonar.properties
+
+# Creating systemd file to start sonarqube
+
+sudo bash -c "cat > /etc/systemd/system/tomcat.service" <<EOL
+[Unit]
+Description=SonarQube service
+After=syslog.target network.target
+
+[Service]
+Type=forking
+User=sonar
+Group=sonar
+ExecStart=/opt/sonarqube/bin/linux-x86-64/sonar.sh start
+ExecStop=/opt/sonarqube/bin/linux-x86-64/sonar.sh stop
+StandardOutput=journal
+LimitNOFILE=131072
+LimitNPROC=8192
+TimeoutStartSec=5
+Restart=always
+SuccessExitStatus=143
+
+[Install]
+WantedBy=multi-user.target
+EOL
+
+sudo systemctl enable sonar
+sudo systemctl start sonar
+sudo systemctl status sonar
+
+# Add limit to sysctl.conf file
+
+sudo grep -qxF 'vm.max_map_count=262144' /etc/sysctl.conf || echo 'vm.max_map_count=262144' | sudo tee -a /etc/sysctl.conf
+sudo grep -qxF 'fs.file-max=65536' /etc/sysctl.conf || echo 'fs.file-max=65536' | sudo tee -a /etc/sysctl.conf
+sudo sysctl -p
+ulimit -n 131072; ulimit -u 8192
+
+# Reboot the system after changes are done
+# sudo reboot, do this when you have save the changes
+
+# Sonar-Scanner Installation
+
+sudo apt update
+sudo wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
+sudo unzip sonar-scanner-cli-5.0.1.3006-linux.zip -d /opt
+sudo echo "export PATH=$PATH:/opt/sonar-scanner-5.0.1.3006-linux/bin" >> ~/.bashrc
+sudo echo "export SONAR_SCANNER_HOME=/opt/sonar-scanner-5.0.1.3006-linux" >> ~/.bashrc
+source ~/.bashrc
+
+#Run the scanner
+
+sonar-scanner -v
