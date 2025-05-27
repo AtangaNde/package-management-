@@ -267,16 +267,16 @@ At this piont, you have deployed a stand-alone-apllication
 
 ## RUN THIS FIRST TWO COMMANDS
 
-  #!/bin/bash
-  sudo hostnamectl set-hostname maven
-  cd /opt
-  sudo yum install wget nano tree unzip git-all -y
-  sudo yum install java-11 -y
-  sudo wget https://dlcdn.apache.org/maven/maven-3/3.9.4/binaries/apache-maven-3.9.4-bin.zip
-  sudo unzip apache-maven-3.9.4-bin.zip
-  sudo rm -rf apache-maven-3.9.4-bin.zip
-  sudo mv apache-maven-3.9.4/ maven
-  /bin/bash
+    #!/bin/bash
+    sudo hostnamectl set-hostname maven
+    cd /opt
+    sudo yum install wget nano tree unzip git-all -y
+    sudo yum install java-11 -y
+    sudo wget https://dlcdn.apache.org/maven/maven-3/3.9.4/binaries/apache-maven-3.9.4-bin.zip
+    sudo unzip apache-maven-3.9.4-bin.zip
+    sudo rm -rf apache-maven-3.9.4-bin.zip
+    sudo mv apache-maven-3.9.4/ maven
+    /bin/bash
 
 ### vi INTO THE CONFIGURATION FILE AND DEFINE THE MAVEN HOME DIRECTORY
 
