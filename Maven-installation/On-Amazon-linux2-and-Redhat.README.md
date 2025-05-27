@@ -2,7 +2,7 @@
 
 ### Login into your AWS account
 
-## Launch an EC2 T2.medium instance with 4GB of RAM
+### Launch an EC2 T2.medium instance with 4GB of RAM
 
 ### Create a security group and open port 22
 
