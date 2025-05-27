@@ -1,3 +1,10 @@
+# AWS Acccount.
+# Create Security Group and open Required ports. 8080 
+# Create Ubuntu / Debian EC2 T2.medium Instance with 4GB of RAM.
+# Attach Security Group to EC2 Instance.
+# Install java openJDK 11+
+
+
 #!/bin/bash
 # This script install tomcat on ubuntu
 # Use script as root user
