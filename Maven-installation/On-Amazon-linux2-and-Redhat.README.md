@@ -1,9 +1,12 @@
 # SIMPLIFIED STEPS TO FOLLOW WHEN INSTALLING MAVEN
 
-**Login into your AWS account
-Launch an EC2 T2.medium instance with 4GB of RAM
-Create a security group and open port 22
-Attach the security group to the instance**
+### Login into your AWS account
+
+## Launch an EC2 T2.medium instance with 4GB of RAM
+
+### Create a security group and open port 22
+
+### Attach the security group to the instance
 
 Run the command bellow to change the hostname of your server to maven
 
@@ -249,71 +252,83 @@ you can now deploy the application by running the command
 At this piont, you have deployed a stand-alone-apllication
 
 
-YOU CAN BETTER STILL COPY THE SCRIPT BELLOW AND RUN
+# YOU CAN BETTER STILL COPY THE SCRIPT BELLOW AND RUN
 
-# AWS Acccount.
-# Create Security Group and open Required ports. 22 
-# Create Redhat EC2 T2.medium Instance with 4GB of RAM.
-# Attach Security Group to EC2 Instance.
-# Install java openJDK 1.8+
+### AWS Acccount.
 
-# RUN THIS FIRST TWO COMMANDS
+### Create Security Group and open Required ports. 22 
 
-sudo hostnamectl set-hostname maven
-sudo su - ec2-user
+### Create Redhat EC2 T2.medium Instance with 4GB of RAM.
 
-#!/bin/bash
-cd /opt
-sudo yum install wget nano tree unzip git-all -y
-sudo yum install java-11 -y
-sudo wget https://dlcdn.apache.org/maven/maven-3/3.9.4/binaries/apache-maven-3.9.4-bin.zip
-sudo unzip apache-maven-3.9.4-bin.zip
-sudo rm -rf apache-maven-3.9.4-bin.zip
-sudo mv apache-maven-3.9.4/ maven
+### Attach Security Group to EC2 Instance.
 
-# vi INTO THE CONFIGURATION FILE AND DEFINE THE MAVEN HOME DIRECTORY
-#  MAKE SURE YOU PASTE THE PATH IN BETWEEN TWO COMMENTS
-# NOTE: cd out of /opt before doing this
+### Install java openJDK 1.8+
 
-vi ~/.bash_profile  # and add the lines below
-export M2_HOME=/opt/maven
-export PATH=$PATH:$M2_HOME/bin
 
-# AFTER DOING THAT, RUN THE SOURCE COMMAND BELOW TO RESTART THE FILE
+## RUN THIS FIRST TWO COMMANDS
+
+  #!/bin/bash
+  sudo hostnamectl set-hostname maven
+  cd /opt
+  sudo yum install wget nano tree unzip git-all -y
+  sudo yum install java-11 -y
+  sudo wget https://dlcdn.apache.org/maven/maven-3/3.9.4/binaries/apache-maven-3.9.4-bin.zip
+  sudo unzip apache-maven-3.9.4-bin.zip
+  sudo rm -rf apache-maven-3.9.4-bin.zip
+  sudo mv apache-maven-3.9.4/ maven
+  /bin/bash
+
+### vi INTO THE CONFIGURATION FILE AND DEFINE THE MAVEN HOME DIRECTORY
+
+###  MAKE SURE YOU PASTE THE PATH IN BETWEEN TWO COMMENTS
+
+### NOTE: cd out of /opt before doing this
+
+  vi ~/.bash_profile 
+  
+# and add the lines below
+
+  export M2_HOME=/opt/maven
+  export PATH=$PATH:$M2_HOME/bin
+
+### AFTER DOING THAT, RUN THE SOURCE COMMAND BELOW TO RESTART THE FILE
 
 source ~/.bash_profile
 
-# CHECK THE DOWNLOADED VERSIONS OF MAVEN , GIT AND JAVA BY RUNNING;
+### CHECK THE DOWNLOADED VERSIONS OF MAVEN , GIT AND JAVA BY RUNNING;
 
-mvn -version
-java -version
-git --version
+  mvn -version
+  java -version
+  git --version
 
-# THIS SCRIPT WILL INSTALL AND CONFIGURE APARCHR MAVEN
+## THIS SCRIPT WILL INSTALL AND CONFIGURE APACHE MAVEN
 
-#!/bin/bash
-cd /opt
-sudo yum install wget nano tree unzip git-all -y
-sudo yum install java-11-openjdk-devel java-1.8.0-openjdk-devel -y
-sudo wget https://dlcdn.apache.org/maven/maven-3/3.9.4/binaries/apache-maven-3.9.4-bin.zip
-sudo unzip apache-maven-3.9.4-bin.zip
-sudo rm -rf apache-maven-3.9.4-bin.zip
-sudo mv apache-maven-3.9.4/ maven
+  #!/bin/bash
+  cd /opt
+  sudo yum install wget nano tree unzip git-all -y
+  sudo yum install java-11-openjdk-devel java-1.8.0-openjdk-devel -y
+  sudo wget https://dlcdn.apache.org/maven/maven-3/3.9.4/binaries/apache-maven-3.9.4-bin.zip
+  sudo unzip apache-maven-3.9.4-bin.zip
+  sudo rm -rf apache-maven-3.9.4-bin.zip
+  sudo mv apache-maven-3.9.4/ maven
 
-# run the first section then the below to define the maven PATH 
-# make sure you cd out of the /opt directory when doing that
-# Reason being that, the ~/.bash_profile is a system file and 
-not a file in the /opt directory
+### make sure you cd out of the /opt directory 
+
 # Run
 
-echo "export M2_HOME=/opt/maven" >> ~/.bash_profile
+  echo "export M2_HOME=/opt/maven" >> ~/.bash_profile
 
 # Then
 
-echo "export PATH=$PATH:$M2_HOME/bin" >> ~/.bash_profile
-source ~/.bash_profile
-sudo hostnamectl set-hostname maven
-sudo su - ec2-user
+  echo "export PATH=$PATH:$M2_HOME/bin" >> ~/.bash_profile
+
+# Restart the .bash_profile by running the below command
+
+  source ~/.bash_profile
+
+  sudo hostnamectl set-hostname maven
+
+  sudo su - ec2-user
 
 
 check if maven if installed
@@ -324,26 +339,29 @@ then
  exit 0
 fi
 
-# YOU CAN STILL AS WELL CONFIGURE MAVEN AS SUCH
+## YOU CAN STILL AS WELL CONFIGURE MAVEN AS SUCH
 
 echo "export M2_HOME=/usr/share/maven" >> ~/.bashrc
 echo "export MAVEN_HOME=/usr/share/maven" >> ~/.bashrc
 echo "export PATH=${M2_HOME}/bin:$PATH}" >> ~/.bashrc
 
-THAT IS;
+
+
+## THAT IS;
+
 If you run the script bellow, it will do the same task
 and it is a more simplier script to use as user data when
 when launching and configuring maven directly on the EC2
 console dashboard
 
-#!/bin/bash
-sudo yum update
-sudo yum install maven -y
-echo "export M2_HOME=/usr/share/maven" >> ~/.bashrc
-echo "export MAVEN_HOME=/usr/share/maven" >> ~/.bashrc
-echo "export PATH=${M2_HOME}/bin:$PATH}" >> ~/.bashrc
-sudo hostnamectl set-hostname maven
-sudo su - ec2-user
+  #!/bin/bash
+  sudo yum update
+  sudo yum install maven -y
+  echo "export M2_HOME=/usr/share/maven" >> ~/.bashrc
+  echo "export MAVEN_HOME=/usr/share/maven" >> ~/.bashrc
+  echo "export PATH=${M2_HOME}/bin:$PATH}" >> ~/.bashrc
+  sudo hostnamectl set-hostname maven
+  sudo su - ec2-user
 
 
 
