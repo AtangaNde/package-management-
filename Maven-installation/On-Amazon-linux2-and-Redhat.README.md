@@ -343,8 +343,10 @@ check if maven is installed
 
 ## YOU CAN STILL AS WELL CONFIGURE MAVEN AS SUCH
 
-   echo "export M2_HOME=/usr/share/maven" >> ~/.bashrc
+   echo "export M2_HOME=/usr/share/maven" >> ~/.bashrc 
+   
    echo "export MAVEN_HOME=/usr/share/maven" >> ~/.bashrc
+   
    echo "export PATH=${M2_HOME}/bin:$PATH}" >> ~/.bashrc
 
 
