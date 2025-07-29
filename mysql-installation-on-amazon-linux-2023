@@ -1,0 +1,40 @@
+in your browser open mysql.com
+click on download
+click on Mysql Community (GPL) downloads
+click on Mysql yum repository
+right click and copy the download link address of the first one
+
+connect to your instance (linux server)
+use wget to download the link address
+run the command ls -itrh
+copy the link in red and download by running the command;
+    sudo dnf install (the link in red)
+
+install the mysql server by running the command;
+    sudo dnf install mysql-community-server
+
+verify if mysql service is running by running the command;
+    sudo systemctl status mysqld
+
+if it is inactive, then start it by running;
+    sudo systemctl start mysqld
+
+To connect to mysql, run the below command to obtain the tempory password;
+     sudo cat /var/log/mysqld.log | grep "password"
+
+Copy the tempory password
+Connect by running the command;
+     sudo mysql -u root -p
+
+Enter the password you copied
+
+Change the password by running;
+      alter user 'root'@'localhost' identified by 'Admin@123';
+
+
+show databases;
+select verson(); 
+
+
+
+
